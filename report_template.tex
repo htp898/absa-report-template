@@ -1,128 +1,84 @@
 \documentclass[a4paper,10pt,twocolumn]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[top=1.8cm,bottom=2.0cm,right=1.35cm,left=1.35cm,columnsep=0.5cm]{geometry}
-\usepackage{setspace, url}
-\usepackage[natbibapa]{apacite}
-\bibliographystyle{apacite}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+\usepackage{setspace, hyperref}
+\usepackage{listings, titling, makecell}
+% \usepackage{multicol, wrapfig}
+% \setlength{\droptitle}{-7em}
 
+\usepackage{graphicx}
+\graphicspath{ {resource/} }
+\usepackage{amsmath, amssymb, bm}
 \newcommand{\mbold}[1]{\boldsymbol{#1}}
 \usepackage[dvipsnames]{xcolor}
-
-
 \newcommand{\hilight}[2][MidnightBlue]{\textcolor{#1}{#2}}
+\usepackage{lipsum} % this generates fictitious text for sample
+\newcommand{\mylipsum}{\lipsum[1][1-15]}
+\usepackage[natbibapa]{apacite}
+\bibliographystyle{apacite}
 
-\usepackage{lipsum}% this geenerates fictitious text for sample
-%opening
-\title{Aspect-based sentiment analysis: A study of the IMDB review database}
-\author{A. Good Student SN:1256734, \url{ags123@uowmail.edu.au}\\
-        B. Good Student SN:4567123, \url{bgs123@uowmail.edu.au}\\
-        C. Good Student SN:1236745, \url{cgs123@uowmail.edu.au}\\
-        D. Good Student SN:3451267, \url{dgs123@uowmail.edu.au}\\
-        School of Computing and Information Technology\\
-        University of Wollongong\\
-        CSCI933, }
-\date{May 31, 2024}
+%title, author, date info
+\title{ 
+\Huge \textbf{Aspect-based Sentiment Analysis:} \\
+\LARGE \textbf{A Study of the IMDB Review Database}
+}
+
+\author{
+Group AS:TEDM \\
+\begin{tabular}{lcr}
+xxxxx xxxxxxx xxxx    & xx:xxxxxxx & \xxx{xxxxxx@xxxxxxx.xxx.xx} \\
+xxx xxxxx xxxx        & xx:xxxxxxx & \xxx{xxxxxx@xxxxxxx.xxx.xx} \\
+xxxxx xxxxx xxxxx     & xx:xxxxxxx & \xxx{xxxxxx@xxxxxxx.xxx.xx} \\
+xxxxxxxxx xxxxxxxxxxx & xx:xxxxxxx & \xxx{xxxxx@xxxxxxx.xxx.xx} \\
+\end{tabular} \\
+\\
+School of Computing and Information Technology \\
+University of Wollongong \\
+CSCI933 \\
+Professor Philip Ogunbona \\
+}
+
+\date{31 May 2024}
 
 \begin{document}
+
+\begin{titlingpage}
+  \doublespacing
+  \maketitle
+  \begin{abstract}
+    \onehalfspacing
+    \textbf{\hilight[BrickRed]{5 marks = 3.2\% = 80-100 words}}
+    \hilight{In this report we study aspect-based analysis using the IMDB review database.
+    Several aspects were identified and extracted.
+    Based on the extracted aspects, each review was classified.}
+    \mylipsum
+  \end{abstract}
+\end{titlingpage}
+
+% \twocolumn[
+% \begin{@twocolumnfalse}
+% \end{@twocolumnfalse}
+% ]
+
 \onehalfspacing
-\twocolumn[
-  \begin{@twocolumnfalse}
-    \maketitle
-    \begin{abstract}
-    \textbf{\hilight[BrickRed]{5 marks}}\\\\
-   In this report we study study aspect-based analysis using the IMDB review database. Several aspects were identified and extracted. Based on the extracted aspects, each review was classified. 
-    \end{abstract}
-  \end{@twocolumnfalse}
-]
 
+\input{sec1_introduction}
 
-\section{Introduction}
-\textbf{\hilight[BrickRed]{15 marks}}\\\\
-\label{sec:introduction}
-\hilight{This introduction should describe the problem (sentiment analysis and in particular aspect-based sentiment analysis) along with its significance and some of the methods that have been proposed to solve it. You must correctly and appropriately cite all references used in writing your introduction.}
+\input{sec2_literature}
 
-\lipsum[2]
+\input{sec3_method}
 
-\section{Literature review}
-\textbf{\hilight[BrickRed]{30 marks}}\\\\
-\hilight{Give a review of extant methods used to address the problem of aspect-based sentiment analysis. This should be based on at least 6 peer-reviewed papers sourced from journal, conferences proceedings. The implication is that you are expected to review at least 6 different methods. Your review is not a listing of papers, but a critical review of the methods described relative to other methods and the strengths/weaknesses.}
+\input{sec4_experiment}
 
-\section{Methods}
-\textbf{\hilight[BrickRed]{30 marks}}\\\\
-This section should describe the methods used in designing your aspect-based sentiment analysis model. You are to describe the steps and the neural network architecture used to conduct the steps. Additionally, the rationale for the choices made must be documented in this section.
-Note that you can add subsections to make your report easy to read.
-\section{Experiments}
-\textbf{\hilight[BrickRed]{5 marks}}\\\\
-\hilight{This a brief overview of the experiments to be conducted.}
-\lipsum[4]
+\input{sec5_discussion}
 
-\subsection{IMDB movie review dataset}
-\textbf{\hilight[BrickRed]{5 marks}}\\\\
-\hilight{Describe the dataset in this subsection.}
-\lipsum[2]
-% \subsection{Data split}
-% \lipsum[4]
-\subsection{Experimental setup}
-\textbf{\hilight[BrickRed]{10 marks}}\\\\
-The method of setting up your experiments including data pre-processing, training and testing data split should be in this subsection.
-You must design at most three experiments and each one must answer a research question.
-\subsection{Experiment 1} 
-\textbf{\hilight[BrickRed]{5 marks}}\\\\
-Experiments you carried out to demonstrate that your method works should be in this section. 
-\subsection{Experiment 2}
-\textbf{\hilight[BrickRed]{5 marks}}\\\\
-Additional experiments you carried out to demonstrate that your method works should be in this section.
-\subsection{Experiment 3}
-\textbf{\hilight[BrickRed]{5 marks}}\\\\
-Additional experiments you carried out to demonstrate that your method works should be in this section.
-\subsection{Results}
-\textbf{\hilight[BrickRed]{21 marks (7 for each experiment)}}\\\\
-\lipsum[4]]
-\begin{figure}[h!t]
-    \centering
-    \includegraphics[scale=0.3]{swiss_roll.png}
-    % swiss_roll.png: 512x416 px, 72dpi, 18.06x14.68 cm, bb=0 0 512 416
-    \caption{An example of image inserted in report}
-    \label{fig:swiss_roll}
-\end{figure}
-We have provided an image of the artificial data, \texttt{swiss roll} generated by our code in Figure~\ref{fig:swiss_roll}.
+\input{sec6_conclusion}
 
-\begin{table}[h!t]
-\caption{Table showing results}
-{%
-\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
-\begin{center}
-\begin{tabular}{lccccc}
- & \mc{5}{c}{Methods}\\\cline{2-6}
-\mc{1}{l}{Dataset} & \mc{1}{c}{None} & \mc{1}{c}{PCA} & \mc{1}{c}{KPCA} & \mc{1}{c}{Autoenc} & \mc{1}{c}{LLE}\\\hline
-Swiss roll & 1 & 2 & 3 & 4 & 5\\
-Broken Swiss & 6 & 7 & 8 & 9 & 10\\
-Helix & 3 & 9 & 10 & 7 & 6\\
-MNIST & 4 & 8 & 5 & 8 & 5\\
-Olivetti face & 6 & 7 & 7 & 8 & 9
-\end{tabular}
-\end{center}
-}%
-\label{tab:results1}
-\end{table} 
-Table~\ref{tab:results1} summarises our results and will be discussed in Section~\ref{sec:discussion}
+\onecolumn
 
-
-\section{Discussion}
-\textbf{\hilight[BrickRed]{5 marks}}\\\\
-\label{sec:discussion}
-\lipsum[2]
-\section{Conclusion}
-\textbf{\hilight[BrickRed]{5 marks}}\\\\
-\label{sec:conclusion}
-\lipsum[9]
-\section{References used in the report}
-\textbf{\hilight[BrickRed]{10 marks}}\\\\
+\bibliography{resource/report_template}
+\textbf{\hilight[BrickRed]{10 marks = 6.4\%}}
 References must be correctly listed and cited in the text of your report.
 Errors in bibliographic details of publications are heavily penalized.
-\bibliography{report_template}
+
 \end{document}
