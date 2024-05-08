@@ -1,25 +1,94 @@
+% !TeX root = report_template.tex
 \documentclass[a4paper,10pt,twocolumn]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[top=1.8cm,bottom=2.0cm,right=1.35cm,left=1.35cm,columnsep=0.5cm]{geometry}
-\usepackage{setspace, url}
-\usepackage[natbibapa]{apacite}
-\bibliographystyle{apacite}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{setspace, hyperref}
-\usepackage{listings, titling, makecell}
+\setlength{\columnsep}{0.5cm}
+\usepackage[top=1.8cm,bottom=2.0cm,right=1.35cm,left=1.35cm]{geometry}
+
+\usepackage{setspace, listings, titling, makecell}
 % \usepackage{multicol, wrapfig}
 % \setlength{\droptitle}{-7em}
 
 \usepackage{graphicx}
 \graphicspath{ {resource/} }
+
 \usepackage{amsmath, amssymb, bm}
 \newcommand{\mbold}[1]{\boldsymbol{#1}}
+
 \usepackage[dvipsnames]{xcolor}
 \newcommand{\hilight}[2][MidnightBlue]{\textcolor{#1}{#2}}
+
 \usepackage{lipsum} % this generates fictitious text for sample
-\newcommand{\mylipsum}{\lipsum[1][1-15]}
-\usepackage[natbibapa]{apacite}
-\bibliographystyle{apacite}
+\newcommand{\mylipsum}{\textcolor{gray}{\lipsum[1][1-15]}}
+
+\usepackage[style=authoryear]{biblatex}
+\addbibresource{report_bibliography.bib}
+
+\DeclareNameAlias{sortname}{family-given}
+%\DeclareDelimFormat*{nameyeardelim}{\space}
+\DeclareDelimFormat{finalnamedelim}{\space\&\space}
+\ExecuteBibliographyOptions{
+  dashed=false,
+  % This option controls whether recurrent the same author/editor list in the bibliography are replaced by a dash
+  giveninits=true
+  % If giveninits is set to true, the default name formats will only render the given name initials and not the full given name
+}
+
+\renewcommand*{\newunitpunct}{\addcomma\space}
+% The separator inserted between ‘units’. The major segments of a bibliography entry are ‘blocks’ and ‘units’. A block is the larger segment of the two, a unit is shorter or at most equal in length.
+
+\renewcommand*{\revsdnamepunct}{}
+% The punctuation to be printed between the given and family name parts when a name is reversed
+
+\renewcommand*{\bibinitdelim}{}
+% The spacing inserted automatically by the backend between multiple initials
+
+\renewcommand*{\bibinitperiod}{}
+% The punctuation inserted automatically by the backend after all initials
+
+%\renewcommand*{\mkbibnamefamily}[1]{\textsc{#1}}
+% small caps
+
+\usepackage{xpatch}
+\xpatchbibmacro{date+extradate}{%
+	\printtext[parens]%
+}{%
+	\setunit*{\space}%
+	\printtext%
+}{}{}
+% Change how to display year in bibliography
+
+\usepackage[style=british]{csquotes}
+% make title quotations use single quotes
+% https://tex.stackexchange.com/questions/116052/how-can-i-make-title-quotations-use-single-quotes
+
+\renewbibmacro{in:}{}
+% suppress the "In: " before the journaltitle
+% https://tex.stackexchange.com/questions/10682/suppress-in-biblatex
+
+\renewcommand*{\intitlepunct}{\space}
+% The separator to be printed between the word “in” and the following title in entry types such as @article,
+
+\DeclareFieldFormat[article]{volume}{vol. #1}
+\DeclareFieldFormat[article]{number}{no. #1}
+\renewbibmacro*{volume+number+eid}{%
+  \setunit{\addcomma\space}%
+  \printfield{volume}%
+  \setunit{\addcomma\space}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}
+}
+% https://tex.stackexchange.com/questions/97376/missing-vol-and-no-in-biblatex-biber
+
+\newcommand*{\mkbiburlangle}[1]{
+    \textless#1\textgreater
+}
+\DeclareFieldFormat{url}{\mkbiburlangle{\url{#1}}}
+% https://tex.stackexchange.com/questions/304569/biblatex-replace-url-label-from-url-and-enclose-url-with-and
+
+\usepackage{hyperref}
+% When using the hyperref package, it is preferable to load it after biblatex.
+
+%\usepackage{natbib}
+%\usepackage{harvard} % this replaces natbib
+%\bibliographystyle{agsm}
