@@ -23,30 +23,40 @@
 \usepackage[style=authoryear]{biblatex}
 \addbibresource{report_bibliography.bib}
 
+%%%% CUSTOMISING AUTHOR-YEAR STYLE %%%%
+% https://tex.stackexchange.com/questions/12806/guidelines-for-customizing-biblatex-styles
+
+%\usepackage[british,english]{babel}
+% Use british date format
+
 \DeclareNameAlias{sortname}{family-given}
-%\DeclareDelimFormat*{nameyeardelim}{\space}
-\DeclareDelimFormat{finalnamedelim}{\space\&\space}
-\ExecuteBibliographyOptions{
-  dashed=false,
-  % This option controls whether recurrent the same author/editor list in the bibliography are replaced by a dash
-  giveninits=true
-  % If giveninits is set to true, the default name formats will only render the given name initials and not the full given name
-}
+% Reverse all names in a name list list
 
 \renewcommand*{\newunitpunct}{\addcomma\space}
 % The separator inserted between ‘units’. The major segments of a bibliography entry are ‘blocks’ and ‘units’. A block is the larger segment of the two, a unit is shorter or at most equal in length.
+\DeclareDelimFormat{finalnamedelim}{\space\&\space}
+% The delimiter printed instead of \multinamedelim before the final name in a name list
+%\renewcommand*{\mkbibnamefamily}[1]{\textsc{#1}}
+% Make family names small caps
 
-\renewcommand*{\revsdnamepunct}{}
-% The punctuation to be printed between the given and family name parts when a name is reversed
+\ExecuteBibliographyOptions{
+  dashed=false,
+  % This option controls whether recurrent the same author/editor list in the bibliography are replaced by a dash
+  giveninits=true,
+  % If giveninits is set to true, the default name formats will only render the given name initials and not the full given name
+  dateabbrev=false,
+  % This option controls whether long and comp dates are printed with long or abbreviated month/year division names.
+  isbn=false
+  % This option controls whether the fields isbn/issn/isrn are printed
+}
 
 \renewcommand*{\bibinitdelim}{}
 % The spacing inserted automatically by the backend between multiple initials
-
+% https://tex.stackexchange.com/questions/10203/biblatex-putting-thin-spaces-between-initials
 \renewcommand*{\bibinitperiod}{}
 % The punctuation inserted automatically by the backend after all initials
-
-%\renewcommand*{\mkbibnamefamily}[1]{\textsc{#1}}
-% small caps
+\renewcommand*{\bibinithyphendelim}{}
+% The punctuation inserted automatically by the backend between the initials of hyphenated name parts
 
 \usepackage{xpatch}
 \xpatchbibmacro{date+extradate}{%
@@ -56,6 +66,7 @@
 	\printtext%
 }{}{}
 % Change how to display year in bibliography
+% https://tex.stackexchange.com/questions/428190/how-to-properly-remove-the-parentheses-around-the-year-in-authoryear-style-v
 
 \usepackage[style=british]{csquotes}
 % make title quotations use single quotes
@@ -64,7 +75,6 @@
 \renewbibmacro{in:}{}
 % suppress the "In: " before the journaltitle
 % https://tex.stackexchange.com/questions/10682/suppress-in-biblatex
-
 \renewcommand*{\intitlepunct}{\space}
 % The separator to be printed between the word “in” and the following title in entry types such as @article,
 
@@ -73,9 +83,9 @@
 \renewbibmacro*{volume+number+eid}{%
   \setunit{\addcomma\space}%
   \printfield{volume}%
-  \setunit{\addcomma\space}%
+  \newunit
   \printfield{number}%
-  \setunit{\addcomma\space}%
+  \newunit
   \printfield{eid}
 }
 % https://tex.stackexchange.com/questions/97376/missing-vol-and-no-in-biblatex-biber
@@ -85,6 +95,21 @@
 }
 \DeclareFieldFormat{url}{\mkbiburlangle{\url{#1}}}
 % https://tex.stackexchange.com/questions/304569/biblatex-replace-url-label-from-url-and-enclose-url-with-and
+
+\DeclareFieldFormat{urldate}{%
+  \addcomma\space%
+  viewed \thefield{urlday}\addspace%
+  \mkbibmonth{\thefield{urlmonth}}\addspace%
+  \thefield{urlyear}\isdot}
+% https://tex.stackexchange.com/questions/333780/biblatex-change-change-format-of-urldate
+
+\renewbibmacro*{url+urldate}{%
+  \usebibmacro{urldate}%
+  \newunit
+  \usebibmacro{url}%
+}
+% reorder access date (urldate) and URL
+% https://tex.stackexchange.com/questions/467334/reorder-access-date-urldate-and-url
 
 \usepackage{hyperref}
 % When using the hyperref package, it is preferable to load it after biblatex.
